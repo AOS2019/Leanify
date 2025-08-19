@@ -31,9 +31,12 @@ export default function Testimonials() {
           {testimonials.map((t, i) => (
             <div key={i} className="bg-gray-100 p-6 rounded-2xl shadow-sm">
               <div className="flex items-center gap-3">
-                  <img src={t.avatar} alt={t.name} />
-                  <p className="font-semibold">{t.name}</p>
-                  <p className="text-sm text-gray-500">{t.role}</p>
+                  {/* <img src={t.avatar} alt={t.name} /> */}
+                  <div className="flex items-center justify-center h-12 w-12 rounded-3xl bg-lime-200 text-green-900 text-xl font-semibold">{t.name.split(" ").map((n) => n[0]).join("")}</div>
+                  <div>
+                    <p className="font-semibold">{t.name}</p>
+                    <p className="text-sm text-gray-500">{t.role}</p>
+                  </div>
               </div>
               <div>
                 <p className="text-sm leading-relaxed">“{t.quote}”</p>
