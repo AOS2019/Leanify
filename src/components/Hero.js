@@ -1,6 +1,41 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { PlayCircle, Star, Users } from "lucide-react";
+import { PlayCircle, Star, Users, CheckCircle } from "lucide-react";
+
+function ProgressBar({ percentage }) {
+  // Ensure percentage is between 0 and 100
+  const progress = Math.max(0, Math.min(100, percentage));
+
+  return (
+    <div className="w-full max-w-lg mx-auto rounded-lg flex items-center">
+      <div className="w-full bg-gray-200 ml-4 h-4 rounded-full overflow-hidden">
+        <motion.div
+          className="h-full bg-indigo-500 rounded-full flex items-center justify-center text-white"
+          initial={{ width: "0%" }}
+          animate={{ width: `${progress}%` }}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
+        >
+          {progress > 5 ? `${progress.toFixed(0)}%` : ''} {/* Show percentage only if enough space */}
+        </motion.div>
+      </div>
+
+      <div className="ml-4 text-gray-700 text-md">
+        {progress.toFixed(0)}%
+      </div>
+
+      {progress === 100 && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
+          className="mt-4 text-green-600"
+        >
+          <CheckCircle size={48} />
+        </motion.div>
+      )}
+    </div>
+  );
+}
 
 export default function Hero() {
   return (
@@ -24,7 +59,7 @@ export default function Hero() {
             <button className="bg-indigo-600 text-white px-6 py-3 rounded-lg">
               Get Started Free
             </button>
-            <button className="flex items-center gap-2 border px-6 py-3 rounded-lg">
+            <button className="flex items-center gap-2 border border-indigo-600 px-6 py-3 rounded-lg">
               <PlayCircle size={18} /> Watch Demo
             </button>
           </div>
@@ -46,13 +81,13 @@ export default function Hero() {
             <h3 className="font-semibold mb-3">Today's Learning Plan</h3>
             <ul className="space-y-3 text-sm">
               <li className="flex justify-between">
-                <span>Semantic HTML</span> <span className="text-gray-500">70%</span>
+                <span>Semantic HTML</span> <span className="text-gray-500 w-full max-w-md"><ProgressBar percentage={70} /></span>
               </li>
               <li className="flex justify-between">
-                <span>Flexbox & Grid</span> <span className="text-gray-500">40%</span>
+                <span>Flexbox & Grid</span> <span className="text-gray-500 w-full max-w-md"><ProgressBar percentage={40} /></span>
               </li>
               <li className="flex justify-between">
-                <span>JS Variables</span> <span className="text-gray-500">10%</span>
+                <span>JS Variables</span> <span className="text-gray-500 w-full max-w-md"><ProgressBar percentage={10} /></span>
               </li>
             </ul>
             <div className="space-y-3 flex items-center justify-between">
