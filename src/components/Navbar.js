@@ -1,7 +1,5 @@
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import Login from "./Login";
-import Register from "./Register";
 import React, { useState } from "react";
+// import { Link } from "react-router-dom";
 import { Menu, X, GraduationCap } from "lucide-react";
 
 export default function Navbar() {
@@ -23,7 +21,12 @@ export default function Navbar() {
           <a href="#faq" className="text-sm text-muted-foreground hover:text-foreground">FAQ</a>
         </div>
 
-        <Router>
+        <div className="hidden items-center gap-3 md:flex">
+          {/* <Link to="/login"><button className="border px-6 py-3 rounded-lg">Sign in</button></Link>
+          <Link to="/register"><button className="bg-indigo-600 text-white px-6 py-3 rounded-lg">Get Started</button></Link> */}
+        </div>
+
+        {/* <Router>
           <div className="hidden items-center gap-3 md:flex">
             <Link to="/"><button className="border px-6 py-3 rounded-lg">Sign in</button></Link>
             <Link to="/register"><button className="bg-indigo-600 text-white px-6 py-3 rounded-lg">Get Started</button></Link>
@@ -32,7 +35,18 @@ export default function Navbar() {
             <Route path="/" element={<Login />} />
             <Route path="/register" element={<Register />} />
           </Routes>
-        </Router>
+        </Router> */}
+
+        {/* <Router>
+            <div className="mt-4 flex gap-2">
+              <Link to="/login"><button className="border px-6 py-3 rounded-lg w-full">Sign in</button></Link>
+              <Link to="/register"><button className="bg-indigo-600 text-white px-6 py-3 rounded-lg w-full">Get Started</button></Link>
+            </div>
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+            </Routes>
+          </Router> */}
 
         {/* Mobile menu */}
         <button className="md:hidden" onClick={() => setOpen(!open)}>
@@ -46,19 +60,10 @@ export default function Navbar() {
           <a href="#testimonials" className="block">Testimonials</a>
           <a href="#faqs" className="block">FAQs</a>
           <div className="mt-4 flex gap-2">
-              <a href={<Login />} ><button className="border px-6 py-3 rounded-lg w-full">Sign in</button></a>
-              <a href="./Register" ><button className="bg-indigo-600 text-white px-6 py-3 rounded-lg w-full">Get Started</button></a>
-            </div>
-          // <Router>
-          //   <div className="mt-4 flex gap-2">
-          //     <Link to="/login"><button className="border px-6 py-3 rounded-lg w-full">Sign in</button></Link>
-          //     <Link to="/register"><button className="bg-indigo-600 text-white px-6 py-3 rounded-lg w-full">Get Started</button></Link>
-          //   </div>
-          //   <Routes>
-          //     <Route path="/login" element={<Login />} />
-          //     <Route path="/register" element={<Register />} />
-          //   </Routes>
-          // </Router>
+            {/* <Link to="/login"><button className="border px-6 py-3 rounded-lg w-full">Sign in</button></Link>
+            <Link to="/register"><button className="bg-indigo-600 text-white px-6 py-3 rounded-lg w-full">Get Started</button></Link> */}
+          </div>
+          
         </div>
       )}
     </nav>
