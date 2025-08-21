@@ -3,10 +3,12 @@ import { motion } from "framer-motion";
 // import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 // import { auth, googleProvider } from "../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
+// import { auth, db } from "../firebase";
 import { auth } from "../firebase";
 import { LogIn, Mail } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+// import { doc, setDoc, getDoc } from "firebase/firestore";
 
 /**
  * Wrap Login to support redirecting the user back to the page they wanted
@@ -16,6 +18,7 @@ import { useAuth } from "../context/AuthContext";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("learner"); // Default role
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -31,12 +34,31 @@ export default function Login() {
     setLoading(true);
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      // const outcome = await signInWithEmailAndPassword(auth, email, password);
+      // const user = outcome.user;
+
+      // Check if user already exists in Firestore
+      // const userRef = doc(db, "users", user.uid);
+      // const userSnap = await getDoc(userRef);
+
+      // //REMEMBER TO REVIISIT THIS
+      // if (!userSnap.exists()) {
+      //   await setDoc(userRef, {
+      //     uid: user.uid,
+      //     name: user.displayName,
+      //     email: user.email,
+      //     photoURL: user.photoURL,
+      //     createdAt: new Date(),
+      //   });
+      // } else {alert("User does not exist, Please create an account")}
       alert("Login successful!");
       setEmail("");
       setPassword("");
+      
       // after successful email/password or Google login:
       navigate(from, { replace: true });
     } catch (err) {
+      console.error(err.message);
       setError(err.message);
     }
     setLoading(false);
@@ -48,9 +70,27 @@ export default function Login() {
       // await signInWithPopup(auth, googleProvider);
       // alert("Google login successful!");
       await loginWithGoogle();
+      //  const result = await loginWithGoogle();
+      //  const user = result.user;
+
+      // Check if user already exists in Firestore
+      // const userRef = doc(db, "users", user.uid);
+      // const userSnap = await getDoc(userRef);
+
+      // if (!userSnap.exists()) {
+      //   await setDoc(userRef, {
+      //     uid: user.uid,
+      //     name: user.displayName,
+      //     email: user.email,
+      //     photoURL: user.photoURL,
+      //     createdAt: new Date(),
+      //   });
+      // }
+
       // after successful email/password or Google login:
       navigate(from, { replace: true });
     } catch (err) {
+      console.error(err.message);
       setError(err.message);
       // alert(err.message);
     }
@@ -74,6 +114,33 @@ export default function Login() {
         {error && <p className="text-red-500 mb-3">{error}</p>}
 
         <form onSubmit={handleLogin} className="space-y-4">
+
+           {/* Role Tabs */}
+        <div className="flex mb-4 border-b">
+          <button
+            type="button"
+            onClick={() => setRole("learner")}
+            className={`flex-1 p-2 ${
+              role === "learner"
+                ? "border-b-2 border-indigo-600 font-semibold"
+                : "text-gray-500"
+            }`}
+          >
+            Learner
+          </button>
+          <button
+            type="button"
+            onClick={() => setRole("tutor")}
+            className={`flex-1 p-2 ${
+              role === "tutor"
+                ? "border-b-2 border-indigo-600 font-semibold"
+                : "text-gray-500"
+            }`}
+          >
+            Tutor
+          </button>
+        </div>
+
           <input
             type="email"
             placeholder="Email"
