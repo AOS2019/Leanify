@@ -1,14 +1,19 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
-import { UserPlus } from "lucide-react";
+import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { auth, googleProvider } from "../firebase";
+import { UserPlus, Mail } from "lucide-react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.from?.pathname || "/login";
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -19,10 +24,24 @@ export default function Register() {
       alert("Registration successful! You can now log in.");
       setEmail("");
       setPassword("");
+      // after successful email/password or Google registration:
+      navigate(from, { replace: true });
     } catch (err) {
       setError(err.message);
     }
     setLoading(false);
+  };
+
+  const handleGoogleRegister = async () => {
+    setError("");
+    try {
+      await signInWithPopup(auth, googleProvider);
+      alert("Google registration successful!");
+      // after successful email/password or Google registration:
+      navigate(from, { replace: true });
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   return (
@@ -66,6 +85,16 @@ export default function Register() {
             {loading ? "Registering..." : "Register"}
           </button>
         </form>
+
+        <div className="mt-6">
+          <button
+            onClick={handleGoogleRegister}
+            className="w-full flex items-center justify-center gap-2 border py-2 rounded-lg hover:bg-gray-100 transition"
+          >
+            <Mail className="text-red-500" />
+            Continue with Google
+          </button>
+        </div>
       </motion.div>
     </div>
   );
