@@ -1,15 +1,19 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { auth, googleProvider } from "../firebase";
+import { createUserWithEmailAndPassword, signInWithPopup, updateProfile } from "firebase/auth";
+import { auth, googleProvider, db } from "../firebase";
 import { UserPlus, Mail } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 
 export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [role, setRole] = useState("learner"); // Default role is learner
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -20,14 +24,46 @@ export default function Register() {
     setError("");
     setLoading(true);
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      
+      // Check if user already exists in Firestore
+      const userRef = doc(db, "users", user.uid);
+      const userSnap = await getDoc(userRef);
+// REMEMBER TO RECHECK THIS
+      if (!userSnap.exists()) {
+        await setDoc(userRef, {
+          uid: user.uid,
+          name: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+          createdAt: new Date(),
+        });
+      } else {alert("User already exist, Please login")}
       alert("Registration successful! You can now log in.");
       setEmail("");
       setPassword("");
+
+      // Update profile with displayName
+      await updateProfile(userCredential.user, { displayName: name });
+      setName("");
+
+      // Save user to Firestore
+      await setDoc(doc(db, "users", userCredential.user.uid), {
+        uid: userCredential.user.uid,
+        name,
+        email,
+        role,
+        createdAt: new Date(),
+      });
+      setName("");
+      
       // after successful email/password or Google registration:
       navigate(from, { replace: true });
     } catch (err) {
+      console.error(err.message);
       setError(err.message);
+      // alert(err.message);
     }
     setLoading(false);
   };
@@ -35,7 +71,22 @@ export default function Register() {
   const handleGoogleRegister = async () => {
     setError("");
     try {
-      await signInWithPopup(auth, googleProvider);
+      const userCred = await signInWithPopup(auth, googleProvider);
+      const user = userCred.user;
+      
+      // Check if user already exists in Firestore
+      const userRef = doc(db, "users", user.uid);
+      const userSnap = await getDoc(userRef);
+// REMEMBER TO RECHECK THIS
+      if (!userSnap.exists()) {
+        await setDoc(userRef, {
+          uid: user.uid,
+          name: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+          createdAt: new Date(),
+        });
+      } else {alert("User already exist, Please login")}
       alert("Google registration successful!");
       // after successful email/password or Google registration:
       navigate(from, { replace: true });
@@ -59,6 +110,33 @@ export default function Register() {
         {error && <p className="text-red-500 mb-3">{error}</p>}
 
         <form onSubmit={handleRegister} className="space-y-4">
+
+          {/* Role Tabs */}
+        <div className="flex mb-4 border-b">
+          <button
+            type="button"
+            onClick={() => setRole("learner")}
+            className={`flex-1 p-2 ${
+              role === "learner"
+                ? "border-b-2 border-indigo-600 font-semibold"
+                : "text-gray-500"
+            }`}
+          >
+            Learner
+          </button>
+          <button
+            type="button"
+            onClick={() => setRole("tutor")}
+            className={`flex-1 p-2 ${
+              role === "tutor"
+                ? "border-b-2 border-indigo-600 font-semibold"
+                : "text-gray-500"
+            }`}
+          >
+            Tutor
+          </button>
+        </div>
+
           <input
             type="email"
             placeholder="Email"
