@@ -5,6 +5,7 @@ import {
   browserLocalPersistence,
   GoogleAuthProvider,
 } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -15,11 +16,15 @@ const firebaseConfig = {
   appId: process.env.REACT_APP_APP_ID,
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
+
+// Auth
 export const auth = getAuth(app);
+export const googleProvider = new GoogleAuthProvider();
 
 // Make sessions survive tab close/browser restart
 setPersistence(auth, browserLocalPersistence);
 
-
-export const googleProvider = new GoogleAuthProvider();
+// Firestore
+export const db = getFirestore(app);
