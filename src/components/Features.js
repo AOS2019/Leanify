@@ -21,8 +21,8 @@ const features = [
 
 export default function Features() {
   return (
-    <section id="features" className="py-16 border-t bg-muted/30">
-      <div className="mx-auto max-w-7xl px-4 py-12 md:px-6 md:py-16">
+    <section id="features" className="py-4 border-t bg-muted/30">
+      <div className="mx-auto max-w-7xl px-3 py-3 md:px-6 md:py-10">
         <div className="mx-auto max-w-2xl text-center">
           <h6 className="mb-3">Why Learnify</h6>
           <h2 className="text-2xl font-bold tracking-tight md:text-4xl">Built for mobile. Powered by community.</h2>
