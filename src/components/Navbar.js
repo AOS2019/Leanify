@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Menu, X, GraduationCap } from "lucide-react";
 
 export default function Navbar() {
@@ -22,31 +22,9 @@ export default function Navbar() {
         </div>
 
         <div className="hidden items-center gap-3 md:flex">
-          {/* <Link to="/login"><button className="border px-6 py-3 rounded-lg">Sign in</button></Link>
-          <Link to="/register"><button className="bg-indigo-600 text-white px-6 py-3 rounded-lg">Get Started</button></Link> */}
+          <Link to="/login"><button className="border px-6 py-3 rounded-lg">Sign in</button></Link>
+          <Link to="/register"><button className="bg-indigo-600 text-white px-6 py-3 rounded-lg">Get Started</button></Link>
         </div>
-
-        {/* <Router>
-          <div className="hidden items-center gap-3 md:flex">
-            <Link to="/"><button className="border px-6 py-3 rounded-lg">Sign in</button></Link>
-            <Link to="/register"><button className="bg-indigo-600 text-white px-6 py-3 rounded-lg">Get Started</button></Link>
-          </div>
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-          </Routes>
-        </Router> */}
-
-        {/* <Router>
-            <div className="mt-4 flex gap-2">
-              <Link to="/login"><button className="border px-6 py-3 rounded-lg w-full">Sign in</button></Link>
-              <Link to="/register"><button className="bg-indigo-600 text-white px-6 py-3 rounded-lg w-full">Get Started</button></Link>
-            </div>
-            <Routes>
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-            </Routes>
-          </Router> */}
 
         {/* Mobile menu */}
         <button className="md:hidden" onClick={() => setOpen(!open)}>
@@ -60,8 +38,8 @@ export default function Navbar() {
           <a href="#testimonials" className="block">Testimonials</a>
           <a href="#faqs" className="block">FAQs</a>
           <div className="mt-4 flex gap-2">
-            {/* <Link to="/login"><button className="border px-6 py-3 rounded-lg w-full">Sign in</button></Link>
-            <Link to="/register"><button className="bg-indigo-600 text-white px-6 py-3 rounded-lg w-full">Get Started</button></Link> */}
+            <Link to="/login"><button className="border px-6 py-3 rounded-lg w-full">Sign in</button></Link>
+            <Link to="/register"><button className="bg-indigo-600 text-white px-6 py-3 rounded-lg w-full">Get Started</button></Link>
           </div>
           
         </div>
