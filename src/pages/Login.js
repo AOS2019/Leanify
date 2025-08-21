@@ -1,14 +1,29 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+// import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+// import { auth, googleProvider } from "../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
-import { LogIn } from "lucide-react";
+import { LogIn, Mail } from "lucide-react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+
+/**
+ * Wrap Login to support redirecting the user back to the page they wanted
+ * (i.e., /dashboard) after successful login.
+ */
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.from?.pathname || "/dashboard";
+  // const { login, loginWithGoogle } = useAuth();
+  const { loginWithGoogle } = useAuth();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -19,11 +34,30 @@ export default function Login() {
       alert("Login successful!");
       setEmail("");
       setPassword("");
+      // after successful email/password or Google login:
+      navigate(from, { replace: true });
     } catch (err) {
       setError(err.message);
     }
     setLoading(false);
   };
+
+  const handleGoogleLogin = async () => {
+    setError("");
+    try {
+      // await signInWithPopup(auth, googleProvider);
+      // alert("Google login successful!");
+      await loginWithGoogle();
+      // after successful email/password or Google login:
+      navigate(from, { replace: true });
+    } catch (err) {
+      setError(err.message);
+      // alert(err.message);
+    }
+  };
+
+  // after successful email/password or Google login:
+  // navigate(from, { replace: true });
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50">
@@ -66,6 +100,16 @@ export default function Login() {
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>
+
+        <div className="mt-6">
+          <button
+            onClick={handleGoogleLogin}
+            className="w-full flex items-center justify-center gap-2 border py-2 rounded-lg hover:bg-gray-100 transition"
+          >
+            <Mail className="text-red-500" />
+            Continue with Google
+          </button>
+        </div>
       </motion.div>
     </div>
   );
