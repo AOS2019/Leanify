@@ -24,9 +24,16 @@ export default function Dashboard() {
         <div className="max-w-3xl mx-auto bg-white rounded-xl shadow p-6">
             <h1 className="text-2xl font-bold mb-2">Dashboard</h1>
             <p className="text-gray-600 mb-6">
-                Welcome{user?.displayName ? `, ${user.displayName}` : ""}! <br />
+                Welcome,{user?.displayName ? `, ${user.displayName}` : ""}! <br />
                 <span className="text-sm text-gray-500">({user?.email})</span>
             </p>
+            {user?.photoURL && (
+                <img
+                src={user.photoURL}
+                alt="Profile"
+                className="w-20 h-20 rounded-full mb-4"
+                />
+            )}
             <button
             onClick={logout}
             className="px-4 py-2 rounded-lg border hover:bg-gray-100"
