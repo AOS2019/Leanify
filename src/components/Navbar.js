@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X, GraduationCap } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const { user, logout } = useAuth();
 
   return (
     <nav className="hadow-md sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/50">
@@ -22,8 +24,20 @@ export default function Navbar() {
         </div>
 
         <div className="hidden items-center gap-3 md:flex">
-          <Link to="/login"><button className="border px-6 py-3 rounded-lg">Sign in</button></Link>
-          <Link to="/register"><button className="bg-indigo-600 text-white px-6 py-3 rounded-lg">Get Started</button></Link>
+          {!user ? (
+            <>
+              <Link to="/login">
+                <button className="border px-6 py-3 rounded-lg">Sign in</button>
+              </Link>
+              <Link to="/register">
+                <button className="bg-indigo-600 text-white px-6 py-3 rounded-lg">Get Started</button>
+              </Link>
+            </>
+          ) : (
+          <button onClick={logout} className="border px-6 py-3 rounded-lg">Logout</button>
+          )}
+          {/* <Link to="/login"><button className="border px-6 py-3 rounded-lg">Sign in</button></Link>
+          <Link to="/register"><button className="bg-indigo-600 text-white px-6 py-3 rounded-lg">Get Started</button></Link> */}
         </div>
 
         {/* Mobile menu */}
