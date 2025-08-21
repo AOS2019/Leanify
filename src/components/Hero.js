@@ -41,7 +41,7 @@ function ProgressBar({ percentage }) {
 export default function Hero() {
   return (
     <section className="bg-gray-200 relative overflow-hidden">
-      <div className="max-w-7xl mx-auto items-center gap-10 px-4 py-16 grid md:grid-cols-2  md:gap-12 md:px-6 md:py-20">
+      <div className="max-w-7xl mx-auto items-center gap-10 px-4 py-6 grid md:grid-cols-2  md:gap-12 md:px-6 md:py-20">
         {/* Text */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
