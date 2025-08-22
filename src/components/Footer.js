@@ -22,9 +22,9 @@ export default function Footer() {
           <div>
             <h4 className="mb-3 font-semibold">Product</h4>
             <ul className="space-y-2 text-sm">
-              <li><a href="#">Browse Courses</a></li>
-              <li><a href="#">Pricing</a></li>
-              <li><a href="#">Certificates</a></li>
+              <li><a href="/">Browse Courses</a></li>
+              <li><a href="/">Pricing</a></li>
+              <li><a href="/">Certificates</a></li>
             </ul>
           </div>
 
@@ -32,9 +32,9 @@ export default function Footer() {
             <div>
               <h4 className="mb-3 font-semibold">Company</h4>
               <ul className="space-y-2 text-sm">
-                <li><a href="#">About</a></li>
-                <li><a href="#">Blog</a></li>
-                <li><a href="#">Careers</a></li>
+                <li><a href="/">About</a></li>
+                <li><a href="/">Blog</a></li>
+                <li><a href="/">Careers</a></li>
               </ul>
             </div>
 
@@ -42,9 +42,9 @@ export default function Footer() {
             <div>
               <h4 className="mb-3 font-semibold">Support</h4>
               <ul className="space-y-2 text-sm">
-                <li><a href="#">Help Center</a></li>
-                <li><a href="#">Contact</a></li>
-                <li><a href="#">Terms & Privacy</a></li>
+                <li><a href="/">Help Center</a></li>
+                <li><a href="/">Contact</a></li>
+                <li><a href="/">Terms & Privacy</a></li>
               </ul>
             </div>
           </div>
