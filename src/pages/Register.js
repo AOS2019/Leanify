@@ -83,6 +83,7 @@ export default function Register() {
           uid: user.uid,
           name: user.displayName,
           email: user.email,
+          role, // Use selected role
           photoURL: user.photoURL,
           createdAt: new Date(),
         });
