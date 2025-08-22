@@ -1,12 +1,14 @@
 import React from "react";
 import { Routes, Route  } from 'react-router-dom';
 import { AuthProvider } from "./context/AuthContext";
-import ProtectedRoute from "./components/ProtectedRoute";
+// import ProtectedRoute from "./components/ProtectedRoute";
+import PrivateRoute from "./components/PrivateRoute";
 
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import HomePage from "./pages/HomePage";
-import Dashboard from "./pages/Dashboard";
+import LearnerDashboard from "./pages/LearnerDashboard";
+import TutorDashboard from "./pages/TutorDashboard";
 
 
 function App() {
@@ -20,14 +22,23 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
 
-          {/* Protected */}
+          {/* Protected Learner Dashboard */}
           <Route
-            path="/dashboard"
+            path="/learner-dashboard"
             element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
+              <PrivateRoute>
+                <LearnerDashboard />
+              </PrivateRoute>
             } />
+
+          {/* Protected Tutor Dashboard */}
+          <Route
+          path="tutor-dashboard"
+          element={
+            <PrivateRoute>
+              <TutorDashboard />
+            </PrivateRoute>
+          } />
         </Routes>
       </AuthProvider>
     </div>
