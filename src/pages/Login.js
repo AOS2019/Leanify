@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-// import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-// import { auth, googleProvider } from "../firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { auth, db, googleProvider } from "../firebase";
+// import { signInWithEmailAndPassword } from "firebase/auth";
 // import { auth, db } from "../firebase";
-import { auth } from "../firebase";
+// import { auth } from "../firebase";
 import { LogIn, Mail } from "lucide-react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-// import { doc, setDoc, getDoc } from "firebase/firestore";
+// import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+// import { useAuth } from "../context/AuthContext";
+import { doc, getDoc } from "firebase/firestore";
 
 /**
  * Wrap Login to support redirecting the user back to the page they wanted
@@ -22,41 +23,48 @@ export default function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const location = useLocation();
+  // const location = useLocation();
+  // const from = location.state?.from?.pathname || "/dashboard";
   const navigate = useNavigate();
-  const from = location.state?.from?.pathname || "/dashboard";
   // const { login, loginWithGoogle } = useAuth();
-  const { loginWithGoogle } = useAuth();
+  // const { loginWithGoogle } = useAuth();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
     setLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      // const outcome = await signInWithEmailAndPassword(auth, email, password);
-      // const user = outcome.user;
+      // await signInWithEmailAndPassword(auth, email, password);
+      const res = await signInWithEmailAndPassword(auth, email, password);
+      const user = res.user;
 
-      // Check if user already exists in Firestore
-      // const userRef = doc(db, "users", user.uid);
-      // const userSnap = await getDoc(userRef);
+      // Get user role from Firestore
+      const userRef = doc(db, "users", user.uid);
+      const userSnap = await getDoc(userRef);
 
-      // //REMEMBER TO REVIISIT THIS
-      // if (!userSnap.exists()) {
-      //   await setDoc(userRef, {
-      //     uid: user.uid,
-      //     name: user.displayName,
-      //     email: user.email,
-      //     photoURL: user.photoURL,
-      //     createdAt: new Date(),
-      //   });
-      // } else {alert("User does not exist, Please create an account")}
-      alert("Login successful!");
-      setEmail("");
-      setPassword("");
-      
+      if (userSnap.exists()) {
+        const userData = userSnap.data();
+        console.log("User Role:", userData.role);
+
+        // Redirect based on role
+        if (userData.role === "tutor") {
+          navigate("/tutor-dashboard");
+          // Optionally, you can show a success message
+          alert("Login successful!");
+          // setEmail("");
+          // setPassword("");
+        } else if (userData.role === "learner"){
+          navigate("/learner-dashboard");
+                    // Optionally, you can show a success message
+          alert("Login successful!");
+          setEmail("");
+          setPassword("");
+        } else {
+          alert("Unknown role, redirecting to registration.");
+          navigate("/register");}
+        }
       // after successful email/password or Google login:
-      navigate(from, { replace: true });
+      // navigate(from, { replace: true });
     } catch (err) {
       console.error(err.message);
       setError(err.message);
@@ -67,28 +75,36 @@ export default function Login() {
   const handleGoogleLogin = async () => {
     setError("");
     try {
-      // await signInWithPopup(auth, googleProvider);
+      const result = await signInWithPopup(auth, googleProvider);
       // alert("Google login successful!");
-      await loginWithGoogle();
+      // await loginWithGoogle();
       //  const result = await loginWithGoogle();
-      //  const user = result.user;
+       const user = result.user;
+      
+      // Get user role from Firestore
+      const userRef = doc(db, "users", user.uid);
+      const userSnap = await getDoc(userRef);
 
-      // Check if user already exists in Firestore
-      // const userRef = doc(db, "users", user.uid);
-      // const userSnap = await getDoc(userRef);
+      if (userSnap.exists()) {
+        const userData = userSnap.data();
+        console.log("User Role:", userData.role);
 
-      // if (!userSnap.exists()) {
-      //   await setDoc(userRef, {
-      //     uid: user.uid,
-      //     name: user.displayName,
-      //     email: user.email,
-      //     photoURL: user.photoURL,
-      //     createdAt: new Date(),
-      //   });
-      // }
+        // let userRole = role; // default from tab
 
+        // Redirect based on role
+        if (userData.role === "tutor") {
+          navigate("/tutor-dashboard");
+        } else if (userData.role === "learner") {
+          navigate("/learner-dashboard");
+        } else {
+          alert("Unknown role, redirecting to registration.");
+          navigate("/register");
+        }
+      }
+
+    
       // after successful email/password or Google login:
-      navigate(from, { replace: true });
+      // navigate(from, { replace: true });
     } catch (err) {
       console.error(err.message);
       setError(err.message);
