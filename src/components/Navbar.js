@@ -52,8 +52,20 @@ export default function Navbar() {
           <a href="#testimonials" className="block">Testimonials</a>
           <a href="#faqs" className="block">FAQs</a>
           <div className="mt-4 flex gap-2">
-            <Link to="/login"><button className="border px-6 py-3 rounded-lg w-full">Sign in</button></Link>
-            <Link to="/register"><button className="bg-indigo-600 text-white px-6 py-3 rounded-lg w-full">Get Started</button></Link>
+            {!user ? (
+              <>
+                <Link to="/login">
+                  <button className="border px-6 py-3 rounded-lg">Sign in</button>
+                </Link>
+                <Link to="/register">
+                  <button className="bg-indigo-600 text-white px-6 py-3 rounded-lg">Get Started</button>
+                </Link>
+              </>
+            ) : (
+            <button onClick={logout} className="border px-6 py-3 rounded-lg">Logout</button>
+            )}
+            {/* <Link to="/login"><button className="border px-6 py-3 rounded-lg w-full">Sign in</button></Link>
+            <Link to="/register"><button className="bg-indigo-600 text-white px-6 py-3 rounded-lg w-full">Get Started</button></Link> */}
           </div>
           
         </div>
