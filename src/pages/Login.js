@@ -19,7 +19,7 @@ import { doc, getDoc } from "firebase/firestore";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("learner"); // Default role
+  // const [role, setRole] = useState("learner"); // Default role
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -140,7 +140,7 @@ export default function Login() {
         <form onSubmit={handleLogin} className="space-y-4">
 
            {/* Role Tabs */}
-        <div className="flex mb-4 border-b">
+        {/* <div className="flex mb-4 border-b">
           <button
             type="button"
             onClick={() => setRole("learner")}
@@ -163,7 +163,7 @@ export default function Login() {
           >
             Tutor
           </button>
-        </div>
+        </div> */}
 
           <input
             type="email"
