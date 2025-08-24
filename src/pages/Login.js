@@ -45,24 +45,28 @@ export default function Login() {
       if (userSnap.exists()) {
         const userData = userSnap.data();
         console.log("User Role:", userData.role);
+        const role = userData.role;
+        navigate(`/${role}-dashboard`);
 
         // Redirect based on role
-        if (userData.role === "tutor") {
-          navigate("/tutor-dashboard");
-          // Optionally, you can show a success message
-          alert("Login successful!");
-          // setEmail("");
-          // setPassword("");
-        } else if (userData.role === "learner"){
-          navigate("/learner-dashboard");
-                    // Optionally, you can show a success message
-          alert("Login successful!");
-          setEmail("");
-          setPassword("");
+        // if (userData.role === "tutor") {
+        //   navigate("/tutor-dashboard");
+        //   // Optionally, you can show a success message
+        //   alert("User Role:", userData.role);
+        //   // setEmail("");
+        //   // setPassword("");
+        // } else if (userData.role === "learner"){
+        //   navigate("/learner-dashboard");
+        //             // Optionally, you can show a success message
+        //   alert("User Role:", userData.role);
+        //   setEmail("");
+        //   setPassword("");
+        // } else {
+        //   alert("Unknown role, redirecting to registration.");
+        //   navigate("/register");}
         } else {
           alert("Unknown role, redirecting to registration.");
           navigate("/register");}
-        }
       // after successful email/password or Google login:
       // navigate(from, { replace: true });
     } catch (err) {
@@ -88,19 +92,23 @@ export default function Login() {
       if (userSnap.exists()) {
         const userData = userSnap.data();
         console.log("User Role:", userData.role);
+        const role = userData.role;
+        navigate(`/${role}-dashboard`);
 
         // let userRole = role; // default from tab
 
         // Redirect based on role
-        if (userData.role === "tutor") {
-          navigate("/tutor-dashboard");
-        } else if (userData.role === "learner") {
-          navigate("/learner-dashboard");
-        } else {
+        // if (userData.role === "tutor") {
+        //   navigate("/tutor-dashboard");
+        // } else if (userData.role === "learner") {
+        //   navigate("/learner-dashboard");
+        // } else {
+        //   alert("Unknown role, redirecting to registration.");
+        //   navigate("/register");
+        // }
+      }else {
           alert("Unknown role, redirecting to registration.");
-          navigate("/register");
-        }
-      }
+          navigate("/register");}
 
     
       // after successful email/password or Google login:
@@ -124,7 +132,7 @@ export default function Login() {
       >
         <div className="flex items-center gap-2 mb-6">
           <LogIn className="text-indigo-600" />
-          <h2 className="text-2xl font-bold">Login</h2>
+          <h2 className="text-2xl font-bold">Sign In</h2>
         </div>
 
         {error && <p className="text-red-500 mb-3">{error}</p>}
@@ -193,6 +201,12 @@ export default function Login() {
             Continue with Google
           </button>
         </div>
+        <p className="text-sm text-center mt-4">
+          Don’t have an account?{" "}
+          <a href="/register" className="text-blue-600 font-semibold">
+            Sign Up
+          </a>
+        </p>
       </motion.div>
     </div>
   );
