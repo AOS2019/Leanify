@@ -12,10 +12,17 @@ export default function PrivateRoute({ children, role }) {
   React.useEffect(() => {
     const fetchRole = async () => {
       if (user) {
-        const ref = doc(db, "users", user.uid);
-        const snap = await getDoc(ref);
-        if (snap.exists()) {
-          setUserRole(snap.data().role);
+        try {
+          const ref = doc(db, "users", user.uid);
+          const snap = await getDoc(ref);
+          if (snap.exists()) {
+            setUserRole(snap.data().role);
+          } else {
+            setUserRole(null);
+          }
+        } catch (err) {
+          console.error("Error fetching role:", err);
+          setUserRole(null);
         }
       }
       setCheckingRole(false);
@@ -27,7 +34,7 @@ export default function PrivateRoute({ children, role }) {
 
   if (!user) return <Navigate to="/login" replace />;
 
-  // Protect by role
+  // ✅ strict role check
   if (role && userRole !== role) {
     return <Navigate to={`/${userRole}-dashboard`} replace />;
   }
