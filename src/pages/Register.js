@@ -36,6 +36,7 @@ export default function Register() {
           uid: user.uid,
           name: user.displayName,
           email: user.email,
+          role, // Use selected role
           photoURL: user.photoURL,
           createdAt: new Date(),
         });
@@ -56,7 +57,6 @@ export default function Register() {
         role,
         createdAt: new Date(),
       });
-      setName("");
       
       // after successful email/password or Google registration:
       navigate(from, { replace: true });
@@ -139,6 +139,15 @@ export default function Register() {
         </div>
 
           <input
+            type="text"
+            placeholder="Full Name"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+
+          <input
             type="email"
             placeholder="Email"
             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
@@ -174,6 +183,12 @@ export default function Register() {
             Continue with Google
           </button>
         </div>
+        <p className="text-sm text-center mt-4">
+          Already have an account?{" "}
+          <a href="/login" className="text-blue-600 font-semibold">
+            Sign In
+          </a>
+        </p>
       </motion.div>
     </div>
   );
