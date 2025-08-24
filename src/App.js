@@ -26,7 +26,7 @@ function App() {
           <Route
             path="/learner-dashboard"
             element={
-              <PrivateRoute>
+              <PrivateRoute role="learner">
                 <LearnerDashboard />
               </PrivateRoute>
             } />
@@ -35,7 +35,7 @@ function App() {
           <Route
           path="tutor-dashboard"
           element={
-            <PrivateRoute>
+            <PrivateRoute role="tutor">
               <TutorDashboard />
             </PrivateRoute>
           } />
