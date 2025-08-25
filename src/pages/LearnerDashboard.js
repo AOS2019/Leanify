@@ -5,9 +5,12 @@ import React, { useEffect, useState } from "react";
 import ProfileMenu from "../components/ProfileMenu";
 import { auth, db } from "../firebase";
 import { doc, getDoc } from "firebase/firestore";
+import { useUser } from "../context/UserContext";
 import ProfileCard from "../components/ProfileCard";
 
+
 export default function LearnerDashboard() {
+  const { profile } = useUser();
   const [userData, setUserData] = useState(null);
   // const [name, setName] = useState("");
   // const navigate = useNavigate();
@@ -35,7 +38,7 @@ export default function LearnerDashboard() {
     <div className="min-h-screen flex flex-col items-center justify-center bg-blue-50">
       {/* <header className="flex justify-between items-center p-4 bg-white shadow"> */}
       <div className="w-full max-w-md">
-        {userData && <ProfileCard userData={userData} setUserData={setUserData} />}
+        {profile && <ProfileCard userData={profile} setUserData={() => {}} />}
         <h1 className="text-3xl font-bold text-blue-700 mb-4">
           Welcome, {userData?.name || "Learner"} 👋 {/* 🎓 Learner Dashboard */}
         </h1>
