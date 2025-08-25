@@ -18,7 +18,7 @@ export default function Navbar() {
         </a>
         <div className="hidden items-center gap-6 md:flex">
           <a href="#features" className="text-sm text-muted-foreground hover:text-foreground">Features</a>
-          <a href="#courses" className="text-sm text-muted-foreground hover:text-foreground">Courses</a>
+          <a href="/courses" className="text-sm text-muted-foreground hover:text-foreground">Courses</a>
           <a href="#testimonials" className="text-sm text-muted-foreground hover:text-foreground">Testimonials</a>
           <a href="#faq" className="text-sm text-muted-foreground hover:text-foreground">FAQ</a>
         </div>
@@ -48,7 +48,7 @@ export default function Navbar() {
       {open && (
         <div className="md:hidden bg-gray-50 p-4 space-y-2">
           <a href="#features" className="block">Features</a>
-          <a href="#courses" className="block">Courses</a>
+          <a href="/courses" className="block">Courses</a>
           <a href="#testimonials" className="block">Testimonials</a>
           <a href="#faqs" className="block">FAQs</a>
           <div className="mt-4 flex gap-2">
