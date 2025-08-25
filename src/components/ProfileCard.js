@@ -3,7 +3,7 @@ import { auth, db, storage } from "../firebase";
 import { doc, updateDoc } from "firebase/firestore";
 import { updateProfile } from "firebase/auth";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-// import { getAvatarColor } from "../utils/getAvatarColor";
+import { getAvatarColor } from "../utils/getAvatarColor";
 
 
 // Helper: compress image into thumbnail
@@ -84,6 +84,21 @@ export default function ProfileCard({ userData, setUserData }) {
       setShowModal(false);
       setAvatarFile(null);
       setPreviewURL(null);
+      if (auth.currentUser) {
+        // Update Firebase Auth profile
+        await updateProfile(auth.currentUser, {
+          displayName: userData.name,
+          photoURL: userData.photoURL || null,
+        });
+
+        // Update Firestore user document
+        const userRef = doc(db, "users", auth.currentUser.uid);
+        await updateDoc(userRef, {
+          name: userData.name,
+          photoURL: userData.photoURL || null,
+        });
+      }
+      // setIsEditing(false);
     } catch (err) {
       console.error("Profile update failed:", err);
     }
@@ -126,7 +141,11 @@ export default function ProfileCard({ userData, setUserData }) {
             }}
           />
         ) : (
-          <div className="w-20 h-20 flex items-center justify-center rounded-full bg-gray-300 text-gray-700 text-xl font-bold">
+          <div
+            className={`w-20 h-20 flex items-center justify-center rounded-full text-xl font-bold ${getAvatarColor(
+              userData?.name
+            )}`}
+          >
             {getInitials(userData?.name)}
           </div>
         )}
