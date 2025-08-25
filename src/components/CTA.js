@@ -16,7 +16,7 @@ export default function CTA() {
               <div className="mb-10 text-sm">No credit card required • Cancel anytime</div>
               <div className="flex w-full gap-2 sm:w-auto">
                 <Link to="/register"><button className="bg-white text-indigo-600 px-6 py-3 rounded-lg w-full sm:w-auto">Create free account</button></Link>
-                <Link to="/"><button className="border border-white px-6 py-3 rounded-lg w-full sm:w-auto">See pricing</button></Link>
+                <Link to="/pricing"><button className="border border-white px-6 py-3 rounded-lg w-full sm:w-auto">See pricing</button></Link>
               </div>
             </div>
           </div>
