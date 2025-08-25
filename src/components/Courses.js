@@ -1,8 +1,16 @@
 import React from "react";
 import { Star } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const courses = [
-  { id: 1, title: "Intro to HTML & CSS", instructor: "Ada Lovelace", rating: 4.8, students: 1200, hours: 6, level: "Beginner", thumbnail: "data:image/svg+xml;utf8,\
+  { id: 1, 
+    title: "Intro to HTML & CSS", 
+    instructor: "Ada Lovelace", 
+    rating: 4.8, 
+    students: 1200, 
+    hours: 6, 
+    level: "Beginner", 
+    thumbnail: "data:image/svg+xml;utf8,\
       <svg xmlns='http://www.w3.org/2000/svg' width='640' height='360'>\
         <rect width='100%' height='100%' fill='%23ecfeff'/>\
         <text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='24' fill='%230e7490'>HTML</text>\
@@ -20,6 +28,7 @@ const courses = [
 ];
 
 export default function Courses() {
+  const navigate = useNavigate();
   return (
     <section id="courses" className="bg-gray-200 relative overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 py-12 md:px-6 md:py-16">
@@ -28,7 +37,10 @@ export default function Courses() {
             <h2 className="text-2xl font-bold tracking-tight md:text-3xl">Popular Courses</h2>
             <p className="text-muted-foreground">Fresh, practical, project‑based content updated monthly.</p>
           </div>
-          <button className="bg-white text-indigo-500 border px-4 py-2 rounded-lg">Browse All</button>
+          <button 
+          className="bg-white text-indigo-500 border px-4 py-2 rounded-lg"
+          onClick={() => navigate("/courses")}
+          >Browse All</button>
         </div>
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {courses.map((c) => (
